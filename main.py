@@ -1,7 +1,6 @@
-from fastapi import FastAPI
+import asyncio
 
-from database import Base, engine
-import models
+from project.fill_data import fill_data
 
-Base.metadata.create_all(bind=engine)
-app = FastAPI(title="main")
+if __name__ == "__main__":
+    asyncio.run(fill_data())
