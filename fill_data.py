@@ -2,7 +2,9 @@ from database import *
 import pandas
 from models import *
 from sqlalchemy import insert, select
+from database import Base, engine
 
+Base.metadata.create_all(bind=engine)
 db = SessionLocal()
 
 df = pandas.read_excel('./etc/Material_type_import.xlsx')

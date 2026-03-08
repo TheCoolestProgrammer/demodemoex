@@ -1,0 +1,21 @@
+<HTML>
+    <head>
+        <title>список товаров</title>
+        <link rel="icon", href="/static/Комфорт.ico" type="image/x-icon">
+    </head>
+<body>
+    <div class="products">
+       {% for product in data.products %}
+        <div class="product_div" style="position:relative;margin:2%; border:2px solid black;">
+            <p style="font-family:Candara; margin-left:5%">тип: {{product.product_type}} | название: {{product.product_name}}</p>
+            <p style="font-family:Candara; margin-left:5%">артикул: {{product.articul}}</p>
+            <p style="font-family:Candara; margin-left:5%">стоимость для партнера: {{product.min_partner_cost}}</p>
+            <p style="font-family:Candara; margin-left:5%">основной материал: {{product.base_material}}</p>
+            <p style="font-family:Candara; position:absolute; right:0; top:0; margin-right: 5%;">требуется часов: {{product.hours}}</p>
+        </div>
+       {%endfor%} 
+    </div>
+    
+</body>
+
+</HTML>
