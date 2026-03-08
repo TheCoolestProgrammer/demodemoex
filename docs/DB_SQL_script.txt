@@ -1,0 +1,31 @@
+create database main;
+create table MaterialType (
+    id serial primary key,
+    material_type text,
+    raw_materials_loss_persentage decimal
+);
+create table ProductsType(
+    id serial primary key,
+    product_type text,
+    product_type_coef deciaml,
+);
+create table Workshops(
+    id serial primary key,
+    workshop_name text,
+    workshop_type text,
+    people_count int
+);
+create table Products(
+    id serial primary key,
+    product_type int references "Products"(id)
+    product_name text,
+    articul int,
+    min_partner_cost decimal,
+    base_material int references "MaterialType"(id)
+);
+create table ProductWorkshops(
+    id serial primary key,
+    products int references "Products"(id),
+    workshop int references "Workshops"(id),
+    make_time decimal
+);
