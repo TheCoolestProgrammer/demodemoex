@@ -16,6 +16,7 @@
             <p style="font-family:Candara; margin-left:5%">основной материал: {{product.base_material}}</p>
             <p style="font-family:Candara; position:absolute; right:0; top:0; margin-right: 5%;">требуется часов: {{product.hours}}</p>
             <a href="/update_product/{{product.product_id|int}}" style="margin-left:5%">изменить продукт</a>
+            <a href="/workshops/{{product.product_id|int}}">посмотреть список цехов</a>
         </div>
        {%endfor%} 
     </div>

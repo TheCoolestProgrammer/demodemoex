@@ -130,3 +130,36 @@ def update_product_post(product_id:int, product_request:UpdateProduct=Form(), db
     except Exception as e:
         return JSONResponse(status_code=status.HTTP_406_NOT_ACCEPTABLE, content=[])
     
+@app.get('/workshops/{product_id}')
+def get_workshops(product_id:int,request:Request, db:Session=Depends(get_db)):
+    workshops = db.query(ProductWorkshops).where(ProductWorkshops.product == product_id).all()
+    data = []
+    for workshop in workshops:
+        data.append({
+            "make_time":workshop.make_time,
+            "workshop_name":workshop.workshops.workshop_name,
+            "people_count": workshop.workshops.people_count
+        })   
+    return templates.TemplateResponse(
+        request=request,
+        name='workshops.html',
+        context={"data":data}
+    )
+
+@app.get('raw_materails_counter')
+def get_raw_materials_count(product_type_id:int, material_type_id:int, amount:int, param1:float, param2:float ,db:Session=Depends(get_db)):
+    if type(amount) is not int or amount <0:
+        return -1
+    if type(param1) is not float or param1<0:
+        return -1
+    if type(param2) is not float or param2<0:
+        return -1
+    pt = db.query(ProductsType).where(ProductsType.id==product_type_id).first()
+    if not pt:
+        return -1
+    mt = db.query(MaterialType).where(MaterialType.material_type==material_type_id).first()
+    if not mt:
+        return -1
+    c = param1*param2*pt.product_type_coef*amount
+    res = c*mt.raw_materials_loss_persentage+c
+    return res
