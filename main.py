@@ -36,3 +36,4 @@ def get_hours_by_id(product_id:int, db):
     stmt = text('select sum(make_time) from "ProductWorkshops" where product=:product_id;')
     result = db.execute(stmt, {"product_id":product_id})
     return result.scalar()
+
