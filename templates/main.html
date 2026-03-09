@@ -6,6 +6,7 @@
 <body>
     <img src="/static/Комфорт.png" style="height:200px; width:auto">
     <h1>список продуктов</h1>
+    <button onclick="window.location.assign('/add_product')" style="color:#355CBD">добавить товар</button>
     <div class="products">
        {% for product in data.products %}
         <div class="product_div" style="position:relative;margin:2%; border:2px solid black; background-color: #D2DFFF;">
@@ -14,6 +15,7 @@
             <p style="font-family:Candara; margin-left:5%">стоимость для партнера: {{product.min_partner_cost}}</p>
             <p style="font-family:Candara; margin-left:5%">основной материал: {{product.base_material}}</p>
             <p style="font-family:Candara; position:absolute; right:0; top:0; margin-right: 5%;">требуется часов: {{product.hours}}</p>
+            <a href="/update_product/{{product.product_id|int}}" style="margin-left:5%">изменить продукт</a>
         </div>
        {%endfor%} 
     </div>

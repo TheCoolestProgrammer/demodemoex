@@ -1,0 +1,56 @@
+<HTML>
+    <head>
+        <title>изменить товар</title>
+        <link rel="icon", href="/static/Комфорт.ico" type="image/x-icon">
+    </head>
+<body>
+    <h1>изменить товар</h1>
+    <button onclick="window.location.replace('/')" style="color:#355CBD">назад</button>
+    <form class="product_form" onsubmit="sendData(event, this, {{product_id}})">
+       <label>тип продукта</label>
+            <select name="product_type">
+                {% for product_type in product_types %}
+                    <option value="{{ product_type[0] }}" 
+                        {% if product_type_id|int == product_type[0]|int %} selected="selected" {% endif %}>
+                        {{ product_type[1] }}
+                    </option>
+                {% endfor %}
+            </select>
+       <label>название продукта</label><input name="product_name" value="{{product_name}}"><br>
+       <label>артикул</label><input name="articul" type="number" min="0" value="{{articul}}"><br>
+       <label>минимальная стоимость для партнеров</label><input name="min_partner_cost" type="number" step="0.01" value="{{min_partner_cost}}"><br>
+       <label>основной материал</label>
+            <select name="base_material">
+                {%for material_type in material_types%}
+                <option value="{{material_type[0]}}" {% if base_material_id == material_type[0]%} selected {%endif%}>{{material_type[1]}}</option>
+                {%endfor%}   
+            </select>
+        <input name="id" type="number" hidden="true" value="{{product_id}}">
+       <button type="submit" style="color:#355CBD">сохранить </button>
+    </form>
+</body>
+<script>
+async function sendData(event, formElement, productId) {
+    event.preventDefault(); 
+    event.stopPropagation();
+
+    const formData = new FormData(formElement);
+
+    try {
+        const response = await fetch(`/update_product/${productId}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert('успешно')
+        }
+    } catch (error) {
+        alert("Ошибка при отправке");
+    }
+
+    return false;
+}
+</script>
+</HTML>
